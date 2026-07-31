@@ -33,11 +33,15 @@ function uid(): string {
 function normalizeReadings(
   readings: BookInput['readings'],
 ): Reading[] {
-  return readings.map((r) => ({
-    id: r.id ?? uid(),
-    date: r.date,
-    rating: r.rating,
-  }))
+  return readings.map((r) => {
+    const impressions = r.impressions?.trim()
+    return {
+      id: r.id ?? uid(),
+      date: r.date,
+      rating: r.rating,
+      ...(impressions ? { impressions } : {}),
+    }
+  })
 }
 
 export async function listBooks(): Promise<Book[]> {

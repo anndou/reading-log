@@ -45,9 +45,14 @@ export function BookDetail({ book, onBack, onEdit, onDelete }: Props) {
           <ol className="readings-timeline">
             {readings.map((reading, index) => (
               <li key={reading.id}>
-                <span className="reading-n">{index + 1}回目</span>
-                <span className="reading-date">{reading.date}</span>
-                <RatingBadge rating={reading.rating} size="md" />
+                <div className="reading-meta">
+                  <span className="reading-n">{index + 1}回目</span>
+                  <span className="reading-date">{reading.date}</span>
+                  <RatingBadge rating={reading.rating} size="md" />
+                </div>
+                {reading.impressions && (
+                  <p className="reading-impressions">{reading.impressions}</p>
+                )}
               </li>
             ))}
           </ol>

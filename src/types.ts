@@ -5,6 +5,8 @@ export interface Reading {
   /** YYYY-MM-DD */
   date: string
   rating: Rating
+  /** Optional impressions / notes for this reading */
+  impressions?: string
 }
 
 export interface Book {
@@ -22,5 +24,10 @@ export type BookInput = {
   title: string
   author: string
   cover?: Blob | null
-  readings: Array<{ id?: string; date: string; rating: Rating }>
+  readings: Array<{
+    id?: string
+    date: string
+    rating: Rating
+    impressions?: string
+  }>
 }

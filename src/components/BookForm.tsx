@@ -9,6 +9,7 @@ type DraftReading = {
   id?: string
   date: string
   rating: Rating
+  impressions: string
 }
 
 type Props = {
@@ -27,13 +28,16 @@ function today(): string {
 
 function toDraft(readings: Reading[]): DraftReading[] {
   if (readings.length === 0) {
-    return [{ key: crypto.randomUUID(), date: today(), rating: 'ok' }]
+    return [
+      { key: crypto.randomUUID(), date: today(), rating: 'ok', impressions: '' },
+    ]
   }
   return readings.map((r) => ({
     key: r.id,
     id: r.id,
     date: r.date,
     rating: r.rating,
+    impressions: r.impressions ?? '',
   }))
 }
 
@@ -86,7 +90,12 @@ export function BookForm({ book, onCancel, onSave }: Props) {
   function addReading() {
     setReadings((prev) => [
       ...prev,
-      { key: crypto.randomUUID(), date: today(), rating: 'ok' },
+      {
+        key: crypto.randomUUID(),
+        date: today(),
+        rating: 'ok',
+        impressions: '',
+      },
     ])
   }
 
@@ -119,6 +128,7 @@ export function BookForm({ book, onCancel, onSave }: Props) {
         id: r.id,
         date: r.date,
         rating: r.rating,
+        impressions: r.impressions,
       })),
     }
 
@@ -200,40 +210,62 @@ export function BookForm({ book, onCancel, onSave }: Props) {
 
         <fieldset className="readings-fieldset">
           <legend>読んだ日・評価</legend>
-          <p className="hint">複数回読んだ場合は、回ごとに日付と評価を追加できます</p>
+          <p className="hint">
+            複数回読んだ場合は、回ごとに日付・評価・感想を追加できます
+          </p>
           <ul className="reading-editor">
             {readings.map((reading, index) => (
               <li key={reading.key}>
-                <span className="reading-n">{index + 1}回目</span>
-                <input
-                  type="date"
-                  value={reading.date}
-                  onChange={(e) => updateReading(reading.key, { date: e.target.value })}
-                  required
-                  aria-label={`${index + 1}回目の読了日`}
-                />
-                <select
-                  value={reading.rating}
-                  onChange={(e) =>
-                    updateReading(reading.key, { rating: e.target.value as Rating })
-                  }
-                  aria-label={`${index + 1}回目の評価`}
-                >
-                  {RATING_OPTIONS.map((opt) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-icon"
-                  onClick={() => removeReading(reading.key)}
-                  disabled={readings.length <= 1}
-                  aria-label={`${index + 1}回目を削除`}
-                >
-                  ×
-                </button>
+                <div className="reading-editor-row">
+                  <span className="reading-n">{index + 1}回目</span>
+                  <input
+                    type="date"
+                    value={reading.date}
+                    onChange={(e) =>
+                      updateReading(reading.key, { date: e.target.value })
+                    }
+                    required
+                    aria-label={`${index + 1}回目の読了日`}
+                  />
+                  <select
+                    value={reading.rating}
+                    onChange={(e) =>
+                      updateReading(reading.key, {
+                        rating: e.target.value as Rating,
+                      })
+                    }
+                    aria-label={`${index + 1}回目の評価`}
+                  >
+                    {RATING_OPTIONS.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="btn btn-ghost btn-icon"
+                    onClick={() => removeReading(reading.key)}
+                    disabled={readings.length <= 1}
+                    aria-label={`${index + 1}回目を削除`}
+                  >
+                    ×
+                  </button>
+                </div>
+                <label className="field reading-impressions-field">
+                  <span>感想（任意）</span>
+                  <textarea
+                    value={reading.impressions}
+                    onChange={(e) =>
+                      updateReading(reading.key, {
+                        impressions: e.target.value,
+                      })
+                    }
+                    rows={3}
+                    placeholder="印象に残ったことなど"
+                    aria-label={`${index + 1}回目の感想`}
+                  />
+                </label>
               </li>
             ))}
           </ul>
