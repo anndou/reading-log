@@ -3,9 +3,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { initTheme } from './theme'
+import { initTypography } from './typography'
 import { initPwa } from './pwa'
 
 initTheme()
+initTypography()
 initPwa()
 
 createRoot(document.getElementById('root')!).render(
