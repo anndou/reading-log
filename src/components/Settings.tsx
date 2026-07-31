@@ -15,6 +15,16 @@ import {
   type ThemeId,
 } from '../theme'
 import {
+  FONT_OPTIONS,
+  getStoredFont,
+  getStoredTextSize,
+  setFont,
+  setTextSize,
+  TEXT_SIZE_OPTIONS,
+  type FontId,
+  type TextSizeId,
+} from '../typography'
+import {
   applyAppUpdate,
   checkForAppUpdate,
   subscribeUpdateStatus,
@@ -44,6 +54,8 @@ export function Settings({ bookCount, onBack, onDataChanged }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [themeId, setThemeId] = useState<ThemeId>(() => getStoredTheme())
+  const [fontId, setFontId] = useState<FontId>(() => getStoredFont())
+  const [textSizeId, setTextSizeId] = useState<TextSizeId>(() => getStoredTextSize())
   const [updateStatus, setUpdateStatus] = useState<UpdateStatus>('idle')
 
   useEffect(() => subscribeUpdateStatus(setUpdateStatus), [])
@@ -56,6 +68,16 @@ export function Settings({ bookCount, onBack, onDataChanged }: Props) {
   function handleThemeChange(id: ThemeId) {
     setTheme(id)
     setThemeId(id)
+  }
+
+  function handleFontChange(id: FontId) {
+    setFont(id)
+    setFontId(id)
+  }
+
+  function handleTextSizeChange(id: TextSizeId) {
+    setTextSize(id)
+    setTextSizeId(id)
   }
 
   async function handleCheckUpdate() {
@@ -190,6 +212,60 @@ export function Settings({ bookCount, onBack, onDataChanged }: Props) {
                       aria-hidden
                     />
                     {option.label}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+
+        <section className="settings-block">
+          <h2>フォント</h2>
+          <p>見出しと本文に使う書体を選びます。</p>
+          <ul className="theme-swatches" role="listbox" aria-label="フォント">
+            {FONT_OPTIONS.map((option) => {
+              const active = option.id === fontId
+              return (
+                <li key={option.id}>
+                  <button
+                    type="button"
+                    className={`theme-swatch font-swatch${active ? ' is-active' : ''}`}
+                    role="option"
+                    aria-selected={active}
+                    data-font-preview={option.id}
+                    onClick={() => handleFontChange(option.id)}
+                  >
+                    <span className="font-swatch-sample" aria-hidden>
+                      {option.sample}
+                    </span>
+                    {option.label}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+
+        <section className="settings-block">
+          <h2>文字サイズ</h2>
+          <p>アプリ全体の文字の大きさを選びます。</p>
+          <ul className="theme-swatches text-size-swatches" role="listbox" aria-label="文字サイズ">
+            {TEXT_SIZE_OPTIONS.map((option) => {
+              const active = option.id === textSizeId
+              return (
+                <li key={option.id}>
+                  <button
+                    type="button"
+                    className={`theme-swatch text-size-swatch${active ? ' is-active' : ''}`}
+                    role="option"
+                    aria-selected={active}
+                    data-size-preview={option.id}
+                    onClick={() => handleTextSizeChange(option.id)}
+                  >
+                    <span className="text-size-swatch-label" aria-hidden>
+                      {option.label}
+                    </span>
+                    {option.description}
                   </button>
                 </li>
               )

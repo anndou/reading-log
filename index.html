@@ -25,6 +25,25 @@
           var meta = document.querySelector('meta[name="theme-color"]')
           if (meta) meta.setAttribute('content', colors[t])
         }
+        var f = localStorage.getItem('reading-log-font')
+        if (
+          f === 'mincho' ||
+          f === 'gothic' ||
+          f === 'serif' ||
+          f === 'rounded' ||
+          f === 'klee' ||
+          f === 'oldmincho' ||
+          f === 'kaisei' ||
+          f === 'yuji' ||
+          f === 'yomogi' ||
+          f === 'antique'
+        ) {
+          document.documentElement.dataset.font = f
+        }
+        var s = localStorage.getItem('reading-log-text-size')
+        if (s === 'small' || s === 'medium' || s === 'large') {
+          document.documentElement.dataset.textSize = s
+        }
       } catch (e) {}
     </script>
   </head>

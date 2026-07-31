@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Kaisei+Decol:wght@400;700&family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&family=Shippori+Antique&family=Shippori+Mincho:wght@500;700&family=Yomogi&family=Yuji+Syuku&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@400;700&display=swap');
 
 :root,
 [data-theme='forest'] {
@@ -26,11 +26,78 @@
   --radius: 18px;
   --font-display: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
   --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  --text-scale: 1;
   color: var(--ink);
   font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+html {
+  font-size: calc(100% * var(--text-scale, 1));
+}
+
+[data-font='mincho'] {
+  --font-display: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+}
+
+[data-font='gothic'] {
+  --font-display: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+}
+
+[data-font='serif'] {
+  --font-display: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+  --font-body: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+}
+
+[data-font='rounded'] {
+  --font-display: 'M PLUS Rounded 1c', 'Hiragino Sans', sans-serif;
+  --font-body: 'M PLUS Rounded 1c', 'Hiragino Sans', sans-serif;
+}
+
+[data-font='klee'] {
+  --font-display: 'Klee One', 'Hiragino Mincho ProN', serif;
+  --font-body: 'Klee One', 'Hiragino Mincho ProN', serif;
+}
+
+[data-font='oldmincho'] {
+  --font-display: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
+  --font-body: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
+}
+
+[data-font='kaisei'] {
+  --font-display: 'Kaisei Decol', 'Hiragino Mincho ProN', serif;
+  --font-body: 'Kaisei Decol', 'Hiragino Mincho ProN', serif;
+}
+
+[data-font='yuji'] {
+  --font-display: 'Yuji Syuku', 'Hiragino Mincho ProN', serif;
+  --font-body: 'Yuji Syuku', 'Hiragino Mincho ProN', serif;
+}
+
+[data-font='yomogi'] {
+  --font-display: 'Yomogi', 'Hiragino Maru Gothic ProN', sans-serif;
+  --font-body: 'Yomogi', 'Hiragino Maru Gothic ProN', sans-serif;
+}
+
+[data-font='antique'] {
+  --font-display: 'Shippori Antique', 'Hiragino Mincho ProN', serif;
+  --font-body: 'Shippori Antique', 'Hiragino Mincho ProN', serif;
+}
+
+[data-text-size='small'] {
+  --text-scale: 0.9;
+}
+
+[data-text-size='medium'] {
+  --text-scale: 1;
+}
+
+[data-text-size='large'] {
+  --text-scale: 1.125;
 }
 
 [data-theme='sea'] {
@@ -797,6 +864,94 @@ h2,
   box-shadow:
     0 0 0 2px var(--forest),
     0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.font-swatch-sample {
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.font-swatch[data-font-preview='mincho'] .font-swatch-sample {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+}
+
+.font-swatch[data-font-preview='gothic'] .font-swatch-sample {
+  font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+}
+
+.font-swatch[data-font-preview='serif'] .font-swatch-sample {
+  font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+}
+
+.font-swatch[data-font-preview='rounded'] .font-swatch-sample {
+  font-family: 'M PLUS Rounded 1c', 'Hiragino Sans', sans-serif;
+}
+
+.font-swatch[data-font-preview='klee'] .font-swatch-sample {
+  font-family: 'Klee One', 'Hiragino Mincho ProN', serif;
+}
+
+.font-swatch[data-font-preview='oldmincho'] .font-swatch-sample {
+  font-family: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
+}
+
+.font-swatch[data-font-preview='kaisei'] .font-swatch-sample {
+  font-family: 'Kaisei Decol', 'Hiragino Mincho ProN', serif;
+}
+
+.font-swatch[data-font-preview='yuji'] .font-swatch-sample {
+  font-family: 'Yuji Syuku', 'Hiragino Mincho ProN', serif;
+}
+
+.font-swatch[data-font-preview='yomogi'] .font-swatch-sample {
+  font-family: 'Yomogi', 'Hiragino Maru Gothic ProN', sans-serif;
+}
+
+.font-swatch[data-font-preview='antique'] .font-swatch-sample {
+  font-family: 'Shippori Antique', 'Hiragino Mincho ProN', serif;
+}
+
+.font-swatch.is-active .font-swatch-sample {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 2px var(--forest);
+}
+
+.text-size-swatch-label {
+  display: grid;
+  place-items: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--ink);
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.text-size-swatch[data-size-preview='small'] .text-size-swatch-label {
+  font-size: 0.72rem;
+}
+
+.text-size-swatch[data-size-preview='medium'] .text-size-swatch-label {
+  font-size: 0.9rem;
+}
+
+.text-size-swatch[data-size-preview='large'] .text-size-swatch-label {
+  font-size: 1.1rem;
+}
+
+.text-size-swatch.is-active .text-size-swatch-label {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 2px var(--forest);
 }
 
 .settings-actions {
