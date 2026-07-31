@@ -103,6 +103,19 @@ export async function deleteBook(id: string): Promise<void> {
   await db.delete('books', id)
 }
 
+export async function clearAllBooks(): Promise<void> {
+  const db = await getDb()
+  await db.clear('books')
+}
+
+export async function replaceAllBooks(books: Book[]): Promise<void> {
+  const db = await getDb()
+  const tx = db.transaction('books', 'readwrite')
+  await tx.store.clear()
+  await Promise.all(books.map((book) => tx.store.put(book)))
+  await tx.done
+}
+
 /** Resize & compress cover to keep IndexedDB size reasonable. */
 export async function compressImage(file: File, maxSize = 800): Promise<Blob> {
   const bitmap = await createImageBitmap(file)

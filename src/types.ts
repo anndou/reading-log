@@ -31,3 +31,20 @@ export type BookInput = {
     impressions?: string
   }>
 }
+
+/** Serializable book for JSON backup (covers as data URLs). */
+export type ExportedBook = {
+  id: string
+  title: string
+  author: string
+  coverDataUrl?: string
+  readings: Reading[]
+  createdAt: number
+  updatedAt: number
+}
+
+export type ExportPayload = {
+  version: 1
+  exportedAt: string
+  books: ExportedBook[]
+}
