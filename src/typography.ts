@@ -2,16 +2,11 @@ export const FONT_STORAGE_KEY = 'reading-log-font'
 export const TEXT_SIZE_STORAGE_KEY = 'reading-log-text-size'
 
 export const FONT_IDS = [
-  'mincho',
-  'gothic',
-  'serif',
-  'rounded',
-  'klee',
-  'oldmincho',
-  'kaisei',
-  'yuji',
-  'yomogi',
+  'biz',
+  'hina',
+  'antiquesoft',
   'antique',
+  'gothic',
 ] as const
 export const TEXT_SIZE_IDS = ['small', 'medium', 'large'] as const
 
@@ -31,16 +26,11 @@ export type TextSizeOption = {
 }
 
 export const FONT_OPTIONS: FontOption[] = [
-  { id: 'mincho', label: '明朝', sample: '読' },
-  { id: 'gothic', label: 'ゴシック', sample: '読' },
-  { id: 'serif', label: '書籍', sample: '読' },
-  { id: 'rounded', label: '丸ゴ', sample: '読' },
-  { id: 'klee', label: '筆記', sample: '読' },
-  { id: 'oldmincho', label: '古明', sample: '読' },
-  { id: 'kaisei', label: '楷書', sample: '読' },
-  { id: 'yuji', label: '習字', sample: '読' },
-  { id: 'yomogi', label: '手書', sample: '読' },
+  { id: 'biz', label: '文庫', sample: '読' },
+  { id: 'hina', label: '物語', sample: '読' },
+  { id: 'antiquesoft', label: '柔古', sample: '読' },
   { id: 'antique', label: '骨董', sample: '読' },
+  { id: 'gothic', label: 'ゴシック', sample: '読' },
 ]
 
 export const TEXT_SIZE_OPTIONS: TextSizeOption[] = [
@@ -64,7 +54,7 @@ export function getStoredFont(): FontId {
   } catch {
     /* ignore */
   }
-  return 'mincho'
+  return 'biz'
 }
 
 export function getStoredTextSize(): TextSizeId {
