@@ -19,7 +19,7 @@ export function BookList({ books, onSelect, onAdd, onSettings }: Props) {
         </div>
         <div className="header-actions">
           <button type="button" className="btn btn-ghost" onClick={onSettings}>
-            データ
+            設定
           </button>
           <button type="button" className="btn btn-primary" onClick={onAdd}>
             追加

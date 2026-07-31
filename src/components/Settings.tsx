@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import type { Book } from '../types'
 import * as db from '../db'
 import {
@@ -8,11 +8,32 @@ import {
   exportPayloadToBooks,
   parseExportPayload,
 } from '../backup'
+import {
+  getStoredTheme,
+  setTheme,
+  THEME_OPTIONS,
+  type ThemeId,
+} from '../theme'
+import {
+  applyAppUpdate,
+  checkForAppUpdate,
+  subscribeUpdateStatus,
+  type UpdateStatus,
+} from '../pwa'
 
 type Props = {
   bookCount: number
   onBack: () => void
   onDataChanged: () => Promise<void>
+}
+
+const UPDATE_MESSAGES: Partial<Record<UpdateStatus, string>> = {
+  checking: '更新を確認しています…',
+  current: 'すでに最新版です',
+  available: '新しいバージョンがあります。更新できます',
+  updating: '更新して再読み込みしています…',
+  unavailable: 'この環境ではアプリ更新を確認できません（開発時など）',
+  error: '更新の確認に失敗しました',
 }
 
 export function Settings({ bookCount, onBack, onDataChanged }: Props) {
@@ -22,10 +43,37 @@ export function Settings({ bookCount, onBack, onDataChanged }: Props) {
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [themeId, setThemeId] = useState<ThemeId>(() => getStoredTheme())
+  const [updateStatus, setUpdateStatus] = useState<UpdateStatus>('idle')
+
+  useEffect(() => subscribeUpdateStatus(setUpdateStatus), [])
 
   function clearFeedback() {
     setMessage(null)
     setError(null)
+  }
+
+  function handleThemeChange(id: ThemeId) {
+    setTheme(id)
+    setThemeId(id)
+  }
+
+  async function handleCheckUpdate() {
+    clearFeedback()
+    const status = await checkForAppUpdate()
+    const text = UPDATE_MESSAGES[status]
+    if (status === 'error') setError(text ?? null)
+    else if (text) setMessage(text)
+  }
+
+  async function handleApplyUpdate() {
+    clearFeedback()
+    setMessage(UPDATE_MESSAGES.updating ?? null)
+    try {
+      await applyAppUpdate()
+    } catch {
+      setError('更新の適用に失敗しました')
+    }
   }
 
   async function handleExport() {
@@ -101,6 +149,9 @@ export function Settings({ bookCount, onBack, onDataChanged }: Props) {
     }
   }
 
+  const updateBusy =
+    updateStatus === 'checking' || updateStatus === 'updating'
+
   return (
     <section className="view settings-view">
       <header className="page-header">
@@ -111,13 +162,68 @@ export function Settings({ bookCount, onBack, onDataChanged }: Props) {
 
       <div className="settings-intro">
         <p className="brand">読書記録</p>
-        <h1>データ管理</h1>
+        <h1>設定</h1>
         <p className="settings-lead">
-          バックアップの作成・復元、またはすべての記録の削除ができます。
+          見た目の変更、アプリの更新、データのバックアップや削除ができます。
         </p>
       </div>
 
       <div className="settings-sections">
+        <section className="settings-block">
+          <h2>テーマカラー</h2>
+          <p>アプリ全体の基調色を選びます。選択はすぐに反映され、端末に保存されます。</p>
+          <ul className="theme-swatches" role="listbox" aria-label="テーマカラー">
+            {THEME_OPTIONS.map((option) => {
+              const active = option.id === themeId
+              return (
+                <li key={option.id}>
+                  <button
+                    type="button"
+                    className={`theme-swatch${active ? ' is-active' : ''}`}
+                    role="option"
+                    aria-selected={active}
+                    onClick={() => handleThemeChange(option.id)}
+                  >
+                    <span
+                      className="theme-swatch-dot"
+                      style={{ background: option.swatch }}
+                      aria-hidden
+                    />
+                    {option.label}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+
+        <section className="settings-block">
+          <h2>アプリの更新</h2>
+          <p>
+            公開済みの最新版があるか確認し、任意のタイミングで取り込みます。更新後はページが再読み込みされます。
+          </p>
+          <div className="settings-actions">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => void handleCheckUpdate()}
+              disabled={busy || updateBusy}
+            >
+              最新版を確認
+            </button>
+            {updateStatus === 'available' && (
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => void handleApplyUpdate()}
+                disabled={busy || updateBusy}
+              >
+                更新して再読み込み
+              </button>
+            )}
+          </div>
+        </section>
+
         <section className="settings-block">
           <h2>エクスポート</h2>
           <p>すべての本と読了記録を JSON ファイルとして保存します。</p>

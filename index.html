@@ -10,6 +10,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>読書記録</title>
+    <script>
+      try {
+        var t = localStorage.getItem('reading-log-theme')
+        if (t === 'forest' || t === 'sea' || t === 'ink' || t === 'ochre' || t === 'wine') {
+          document.documentElement.dataset.theme = t
+          var colors = {
+            forest: '#1f4d3a',
+            sea: '#1e4d5c',
+            ink: '#2c333a',
+            ochre: '#5c4a32',
+            wine: '#5c2a3a',
+          }
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute('content', colors[t])
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

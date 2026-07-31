@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap');
 
-:root {
+:root,
+[data-theme='forest'] {
   --ink: #14241c;
   --ink-soft: #3d5248;
   --muted: #6b8175;
@@ -16,6 +17,12 @@
   --danger: #9b3a3a;
   --line: rgba(20, 36, 28, 0.12);
   --shadow: 0 18px 50px rgba(20, 36, 28, 0.12);
+  --ambient-glow-1: rgba(74, 124, 99, 0.28);
+  --ambient-glow-2: rgba(196, 92, 38, 0.12);
+  --ambient-glow-3: rgba(31, 77, 58, 0.18);
+  --ambient-base-1: #f4f8f4;
+  --ambient-base-2: #e6efe8;
+  --ambient-base-3: #dde8e0;
   --radius: 18px;
   --font-display: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
   --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
@@ -24,6 +31,102 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+[data-theme='sea'] {
+  --ink: #142028;
+  --ink-soft: #3d4f5c;
+  --muted: #6b7f8a;
+  --paper: #eef3f6;
+  --paper-2: #e0e8ed;
+  --surface: rgba(255, 252, 250, 0.78);
+  --forest: #1e4d5c;
+  --forest-deep: #143640;
+  --moss: #3d7a8c;
+  --gold: #a67c2a;
+  --warm: #b86a3a;
+  --cool: #2f6f82;
+  --danger: #9b3a3a;
+  --line: rgba(20, 32, 40, 0.12);
+  --shadow: 0 18px 50px rgba(20, 32, 40, 0.12);
+  --ambient-glow-1: rgba(61, 122, 140, 0.28);
+  --ambient-glow-2: rgba(184, 106, 58, 0.12);
+  --ambient-glow-3: rgba(30, 77, 92, 0.18);
+  --ambient-base-1: #f2f7f9;
+  --ambient-base-2: #e4edf1;
+  --ambient-base-3: #d7e4ea;
+}
+
+[data-theme='ink'] {
+  --ink: #1a1c1e;
+  --ink-soft: #454a50;
+  --muted: #6e757c;
+  --paper: #f0f1f2;
+  --paper-2: #e4e6e8;
+  --surface: rgba(255, 255, 255, 0.8);
+  --forest: #2c333a;
+  --forest-deep: #1e2328;
+  --moss: #5a6570;
+  --gold: #9a7b3a;
+  --warm: #a85a3a;
+  --cool: #4a6478;
+  --danger: #9b3a3a;
+  --line: rgba(26, 28, 30, 0.12);
+  --shadow: 0 18px 50px rgba(26, 28, 30, 0.12);
+  --ambient-glow-1: rgba(90, 101, 112, 0.22);
+  --ambient-glow-2: rgba(168, 90, 58, 0.1);
+  --ambient-glow-3: rgba(44, 51, 58, 0.16);
+  --ambient-base-1: #f5f5f6;
+  --ambient-base-2: #e9eaec;
+  --ambient-base-3: #dde0e3;
+}
+
+[data-theme='ochre'] {
+  --ink: #2a2218;
+  --ink-soft: #5a4e3e;
+  --muted: #7d7160;
+  --paper: #f1ece4;
+  --paper-2: #e5dfd4;
+  --surface: rgba(255, 252, 247, 0.8);
+  --forest: #5c4a32;
+  --forest-deep: #403222;
+  --moss: #8a6f45;
+  --gold: #b8860b;
+  --warm: #a05a28;
+  --cool: #5a6b6e;
+  --danger: #9b3a3a;
+  --line: rgba(42, 34, 24, 0.12);
+  --shadow: 0 18px 50px rgba(42, 34, 24, 0.12);
+  --ambient-glow-1: rgba(138, 111, 69, 0.26);
+  --ambient-glow-2: rgba(160, 90, 40, 0.12);
+  --ambient-glow-3: rgba(92, 74, 50, 0.16);
+  --ambient-base-1: #f6f2eb;
+  --ambient-base-2: #ebe4d9;
+  --ambient-base-3: #e0d7c9;
+}
+
+[data-theme='wine'] {
+  --ink: #241418;
+  --ink-soft: #564048;
+  --muted: #7d6870;
+  --paper: #f4eef0;
+  --paper-2: #e9e0e3;
+  --surface: rgba(255, 252, 252, 0.8);
+  --forest: #5c2a3a;
+  --forest-deep: #3f1c28;
+  --moss: #8a4a5c;
+  --gold: #b8860b;
+  --warm: #c45c26;
+  --cool: #4a5e78;
+  --danger: #9b3a3a;
+  --line: rgba(36, 20, 24, 0.12);
+  --shadow: 0 18px 50px rgba(36, 20, 24, 0.12);
+  --ambient-glow-1: rgba(138, 74, 92, 0.26);
+  --ambient-glow-2: rgba(196, 92, 38, 0.1);
+  --ambient-glow-3: rgba(92, 42, 58, 0.16);
+  --ambient-base-1: #f8f2f4;
+  --ambient-base-2: #eee4e7;
+  --ambient-base-3: #e4d8dc;
 }
 
 *,
@@ -80,11 +183,17 @@ h2,
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(74, 124, 99, 0.28), transparent 55%),
-    radial-gradient(ellipse 60% 45% at 95% 15%, rgba(196, 92, 38, 0.12), transparent 50%),
-    radial-gradient(ellipse 70% 40% at 50% 110%, rgba(31, 77, 58, 0.18), transparent 55%),
-    linear-gradient(165deg, #f4f8f4 0%, #e6efe8 45%, #dde8e0 100%);
+    radial-gradient(ellipse 80% 50% at 10% -10%, var(--ambient-glow-1), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 95% 15%, var(--ambient-glow-2), transparent 50%),
+    radial-gradient(ellipse 70% 40% at 50% 110%, var(--ambient-glow-3), transparent 55%),
+    linear-gradient(
+      165deg,
+      var(--ambient-base-1) 0%,
+      var(--ambient-base-2) 45%,
+      var(--ambient-base-3) 100%
+    );
   z-index: 0;
+  transition: background 0.45s ease;
 }
 
 .ambient::after {
@@ -635,6 +744,65 @@ h2,
   margin: 1.25rem 0 0;
   color: var(--forest);
   font-size: 0.92rem;
+}
+
+.theme-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.theme-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 3.4rem;
+  padding: 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.theme-swatch:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.theme-swatch.is-active {
+  border-color: var(--forest);
+  color: var(--forest);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.theme-swatch-dot {
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.theme-swatch.is-active .theme-swatch-dot {
+  box-shadow:
+    0 0 0 2px var(--forest),
+    0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
 }
 
 .dialog-backdrop {
