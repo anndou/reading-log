@@ -4,12 +4,14 @@ import * as db from './db'
 import { BookList } from './components/BookList'
 import { BookDetail } from './components/BookDetail'
 import { BookForm } from './components/BookForm'
+import { Settings } from './components/Settings'
 
 type View =
   | { name: 'list' }
   | { name: 'detail'; id: string }
   | { name: 'create' }
   | { name: 'edit'; id: string }
+  | { name: 'settings' }
 
 export default function App() {
   const [books, setBooks] = useState<Book[]>([])
@@ -69,6 +71,14 @@ export default function App() {
             books={books}
             onSelect={(id) => setView({ name: 'detail', id })}
             onAdd={() => setView({ name: 'create' })}
+            onSettings={() => setView({ name: 'settings' })}
+          />
+        )}
+        {view.name === 'settings' && (
+          <Settings
+            bookCount={books.length}
+            onBack={() => setView({ name: 'list' })}
+            onDataChanged={refresh}
           />
         )}
         {view.name === 'detail' && selected && (

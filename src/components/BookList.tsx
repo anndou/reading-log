@@ -6,9 +6,10 @@ type Props = {
   books: Book[]
   onSelect: (id: string) => void
   onAdd: () => void
+  onSettings: () => void
 }
 
-export function BookList({ books, onSelect, onAdd }: Props) {
+export function BookList({ books, onSelect, onAdd, onSettings }: Props) {
   return (
     <section className="view list-view">
       <header className="page-header">
@@ -16,9 +17,14 @@ export function BookList({ books, onSelect, onAdd }: Props) {
           <p className="brand">読書記録</p>
           <h1>本棚</h1>
         </div>
-        <button type="button" className="btn btn-primary" onClick={onAdd}>
-          追加
-        </button>
+        <div className="header-actions">
+          <button type="button" className="btn btn-ghost" onClick={onSettings}>
+            データ
+          </button>
+          <button type="button" className="btn btn-primary" onClick={onAdd}>
+            追加
+          </button>
+        </div>
       </header>
 
       {books.length === 0 ? (
